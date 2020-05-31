@@ -46,7 +46,7 @@ public class Habitat extends JPanel implements Runnable{
     public void run() {
         while (going) {
             try {
-                Thread.sleep(70);
+                Thread.sleep(10);
                 repaint();
             } catch (InterruptedException e) {
                 going=false;

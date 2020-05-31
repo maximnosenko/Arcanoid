@@ -9,6 +9,9 @@ public class Ball extends AbstractBoll implements Movable {
     Ball(int x, int y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
         singleton=Singleton.getInstance();
+        dirX = 1;
+        dirY = -1;
+        speed = 2;
     }
 
     @Override
@@ -16,16 +19,6 @@ public class Ball extends AbstractBoll implements Movable {
         g.setColor(Color.RED);
         g.fillOval(x,y,sizeX,sizeY);
         g.drawOval(x,y,sizeX,sizeY);
-    }
-
-    @Override
-    public void setCoordinates(int x,int y) {
-        this.x=x;
-        this.y=y;
-        this.right=x+sizeX;
-        this.left=x;
-        this.up=y;
-        this.down=y+sizeY;
     }
 
     @Override
@@ -42,7 +35,7 @@ public class Ball extends AbstractBoll implements Movable {
             //System.out.println(right);
             //System.out.println(left);
             try {
-                Thread.sleep(40);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 isMoving=false;
             }

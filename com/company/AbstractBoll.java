@@ -3,8 +3,8 @@ package com.company;
 public abstract class AbstractBoll extends AbstractActor implements Movable,Runnable,Distractible{
 
     int minY;// для пересечения нижнего поля
-    int speed=10;//скорость шарика
-    double dirX=1,dirY=1;//нужны для направления шарика
+    int speed;//скорость шарика
+    double dirX,dirY;//нужны для направления шарика
     boolean isMoving=true;
     Singleton singleton;
 

@@ -19,14 +19,4 @@ public class wall extends AbstractActor {
         g.fillRect(x,y,sizeX,sizeY);
         g.drawRect(x,y,sizeX,sizeY);
     }
-
-    @Override
-    public void setCoordinates(int x,int y) {
-        this.x=x;
-        this.y=y;
-        right=x+sizeX;
-        left=x;
-        up=y;
-        down=y+sizeY;
-    }
 }
