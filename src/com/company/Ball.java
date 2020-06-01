@@ -5,8 +5,8 @@ import java.awt.*;
 public class Ball extends AbstractBall implements Movable {
     Ball(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
-        dirX=-0.3;
-        dirY=0.8;
+        dirX=0.6;//0.6
+        dirY=0.8;//0.8
         speed=5;
     }
 
@@ -40,6 +40,27 @@ public class Ball extends AbstractBall implements Movable {
                 this.setY(actor.up-sizeY);
                 dirY=-dirY;
                 break;
+            }
+            case 5:{
+                dirX=Math.sqrt(0.5);
+                dirY=Math.sqrt(0.5);
+                break;
+            }
+            case 6:{
+                dirX=Math.sqrt(0.5);
+                dirY=Math.sqrt(0.5);
+                //isMoving=false;
+                break;
+            }
+            case 7:{
+                dirX=-Math.sqrt(0.5);
+                dirY=-Math.sqrt(0.5);
+                //isMoving=false;
+                break;
+            }
+            case 8:{
+                dirX=-Math.sqrt(0.5);
+                dirY=Math.sqrt(0.5);
             }
             default:
         }

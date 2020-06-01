@@ -9,7 +9,7 @@ public class Habitat extends JPanel implements Runnable{
     private ConcreteFactory factory= new ConcreteFactory();
     Ball ball;
     double x=120,y=300;
-    int sizeX=100,sizeY=100;
+    int sizeX=50,sizeY=20;
 
     public Habitat(Singleton singleton) {
         this.singleton = singleton;
@@ -20,14 +20,14 @@ public class Habitat extends JPanel implements Runnable{
         new Thread(this).start();
         ball=new Ball(420,500,20,20);
         new Thread(ball).start();
-        //for(int i=0;i<8;i++) {
-          //  for (int j = 0; j < 10; j++) {
-                factory.createBlock(350, y, sizeX, sizeY);
-            //    x=x+60;
-            //}
-            //x=120;
-            //y=y-35;
-        //}
+        for(int i=0;i<8;i++) {
+            for (int j = 0; j < 10; j++) {
+                factory.createBlock(x, y, sizeX, sizeY);
+                x=x+60;
+            }
+            x=120;
+            y=y-35;
+        }
         //платформу и стены сделать тут
     }
 
@@ -56,6 +56,34 @@ public class Habitat extends JPanel implements Runnable{
             if(actor.up<ball.down&&actor.right>ball.centerX&&actor.left<ball.centerX&&ball.up<actor.up)
             {
                 direct=4;
+                ball.onCollision(actor,direct);
+                continue;
+                //System.out.println(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2)));
+                //if(Math.sqrt(Math.pow(actor.right - ball.centerX, 2) + Math.pow(actor.down - ball.centerY, 2)) < ball.getSizeX()/2){
+            }
+            if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<ball.getSizeX()/2){
+               // System.out.println(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2)));
+                direct=5;
+                //ball.onCollision(actor,6);
+                continue;
+            }
+            //System.out.println(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2)));
+            if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2))<ball.getSizeX()/2)
+            {
+                System.out.println("верхний правый");
+                direct=6;
+                //ball.onCollision(actor,direct);
+                continue;
+            }
+            if(Math.sqrt(Math.pow(ball.centerX-actor.left,2)+Math.pow(ball.centerY-actor.up,2))<ball.getSizeX()/2)
+            {
+                System.out.println("верхний левый");
+                direct=7;
+                ball.onCollision(actor,direct);
+                continue;
+            }
+            if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<ball.getSizeX()/2){
+                direct=8;
                 ball.onCollision(actor,direct);
             }
         }
