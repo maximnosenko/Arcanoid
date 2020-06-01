@@ -1,5 +1,5 @@
 package com.company;
 
-public interface Distractible {
+public interface Destructable {
     void Destroy();
 }

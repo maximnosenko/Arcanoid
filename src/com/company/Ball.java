@@ -3,12 +3,8 @@ package com.company;
 import java.awt.*;
 
 public class Ball extends AbstractBall implements Movable {
-    //int w,h;
-    Habitat habitat;
-
-    Ball(int x, int y,int sizeX,int sizeY) {
+    Ball(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
-        singleton=Singleton.getInstance();
         dirX=-0.6;
         dirY=0.8;
         speed=2;
@@ -17,8 +13,8 @@ public class Ball extends AbstractBall implements Movable {
     @Override
     public void painting(Graphics g) {
         g.setColor(Color.RED);
-        g.fillOval(x,y,sizeX,sizeY);
-        g.drawOval(x,y,sizeX,sizeY);
+        g.fillOval((int)x,(int)y,sizeX,sizeY);
+        g.drawOval((int)x,(int)y,sizeX,sizeY);
     }
 
     @Override
@@ -28,7 +24,6 @@ public class Ball extends AbstractBall implements Movable {
             case 1: {
                 this.setX(actor.right);
                 dirX=-dirX;
-                //System.out.println(getX()+getX());
                 break;
             }
             case 2:{
@@ -39,23 +34,15 @@ public class Ball extends AbstractBall implements Movable {
             case 3:{
                 this.setY(actor.down);
                 dirY=-dirY;
-                //System.out.println(this.x+this.y);
                 break;
             }
             case 4:{
                 this.setY(actor.up-sizeY);
                 dirY=-dirY;
-                //System.out.println(this.x+this.y);
                 break;
             }
             default:
         }
-        System.out.println(speed);
-            //System.out.println(actor.left+sizeX);
-            //this.right=actor.left;
-
-        //isMoving=false;
-        //return 0;
     }//isMoveing false
     //onColigen написать что шарик столкунлся, чтобы обрабатывать столкновение
 
@@ -68,17 +55,12 @@ public class Ball extends AbstractBall implements Movable {
     @Override
     public void run() {
         while(isMoving){
-            setCoordinates((int)(getX()+getXDir()*getSpeed()),(int)(getY()+getYDir()*getSpeed()));
-            System.out.println("getSpeed "+getSpeed());
-            //setDir(Math.random() * 2 - 1, Math.random() * 2 - 1);
-            //System.out.println(right);
-            //System.out.println(left);
+            setCoordinates(getX()+getXDir()*getSpeed(),getY()+getYDir()*getSpeed());
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 isMoving=false;
             }
         }
-
     }
 }

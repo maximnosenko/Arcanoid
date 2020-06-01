@@ -9,6 +9,6 @@ public class ConcreteFactory implements Factory {
 
     @Override
     public void createWall(int x,int y,int sizeX,int sizeY) {
-        singleton.getVector().add(new wall(x,y,sizeX,sizeY));
+        singleton.getVector().add(new Wall(x,y,sizeX,sizeY));
     }
 }

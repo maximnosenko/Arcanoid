@@ -1,9 +1,9 @@
 package com.company;
 
 
-public abstract class AbstractBlock extends AbstractActor implements Distractible {
+public abstract class AbstractBlock extends AbstractActor implements Destructable {
     int points;
-    AbstractBlock(int x,int y){
+    AbstractBlock(double x,double y){
         this.x=x;
         this.y=y;
     }

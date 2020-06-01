@@ -4,10 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Habitat extends JPanel implements Runnable{
-    //int x1=10,y1=0,x2=10,y2=700;//0,0,0,700
-    //int weight,height=0;
     boolean going= true;
-    Singleton singleton = Singleton.getInstance();
+    Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
     Ball ball;
 
@@ -28,21 +26,12 @@ public class Habitat extends JPanel implements Runnable{
         super.paintComponent(graphics);
         for(AbstractActor actor:singleton.getVector()) {
             actor.painting(graphics);
-            int direct=0;
-            //if(actor.right>ball.left&&actor.left<ball.right&&actor.up<ball.down&&actor.down>ball.up){
-            //actor.right>ball.left && actor.getX()<ball.getX()&&actor.down>ball.up&&ball.down<actor.up&&actor.left<ball.left
-              //  ball.onCollision(actor);
-                //System.out.println("si si si");
-                //going=false;
-            //singleton.getVector().get(i).painting(graphics);
-            //}
+            int direct;
+
             if(actor.down>ball.up&& ball.getX() > actor.left && ball.getX() < actor.right&&ball.down>actor.down)
             {
                 direct=3;
                 ball.onCollision(actor,direct);
-                //System.out.println("actor"+actor.getY());
-                //System.out.println("ball"+ball.getY());
-                System.out.println("Привет Андрей тун тудудн тун");
                 continue;
             }
             if(actor.right>ball.left&&actor.right<ball.right&&ball.getY() > actor.up && ball.getY() < actor.down){
@@ -59,11 +48,8 @@ public class Habitat extends JPanel implements Runnable{
             {
                 direct=4;
                 ball.onCollision(actor,direct);
-                //continue;
+                continue;
             }
-            //if(actor.up<ball.right&&){
-
-            //}
         }
         ball.painting(graphics);
     }

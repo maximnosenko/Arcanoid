@@ -2,9 +2,9 @@ package com.company;
 
 import java.awt.*;
 
-public class wall extends AbstractActor {
+public class Wall extends AbstractActor {
 
-    wall(int x,int y, int sizeX,int sizeY){
+    Wall(double x,double y, int sizeX,int sizeY){
         this.x=x;
         this.y=y;
         this.sizeX=sizeX;
@@ -15,7 +15,7 @@ public class wall extends AbstractActor {
     @Override
     public void painting(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(x,y,sizeX,sizeY);
-        g.drawRect(x,y,sizeX,sizeY);
+        g.fillRect((int)x,(int)y,sizeX,sizeY);
+        g.drawRect((int)x,(int)y,sizeX,sizeY);
     }
 }

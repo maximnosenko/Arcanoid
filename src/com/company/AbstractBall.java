@@ -1,14 +1,13 @@
 package com.company;
 
-public abstract class AbstractBall extends AbstractActor implements Movable,Runnable,Distractible{
+public abstract class AbstractBall extends AbstractActor implements Movable,Runnable,Destructable{
 
     int minY;// для пересечения нижнего поля
     int speed;//скорость шарика
     double dirX,dirY;//нужны для направления шарика
     boolean isMoving=true;
-    Singleton singleton;
 
-    AbstractBall(int x, int y, int sizeX, int sizeY)//нужен бил Dir вообще
+    AbstractBall(double x, double y, int sizeX, int sizeY)//нужен бил Dir вообще
     {
         this.x=x;
         this.y=y;

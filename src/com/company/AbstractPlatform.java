@@ -4,7 +4,7 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
 
     int speed,maxX,maxY;
 
-    AbstractPlatform(int x,int y,int maxX ,int maxY)
+    AbstractPlatform(double x,double y,int maxX ,int maxY)
     {
         this.x=x;
         this.y=y;
@@ -23,7 +23,7 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
     }
 
     @Override
-    public void createBoll() {
+    public void createBall() {
 
     }
 

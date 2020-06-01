@@ -1,29 +1,29 @@
 package com.company;
 
 public abstract class AbstractActor implements Behavior {
-    int x,y;
+    double x,y;
     int sizeX,sizeY;//размер объекта
-    int right,left,up,down;
+    double right,left,up,down;
 
     //getLeft,getLeft
 
     @Override
-    public int getX() {
+    public double getX() {
         return x;
     }
 
     @Override
-    public int getY() {
+    public double getY() {
         return y;
     }
 
     @Override
-    public void setX(int x) {
+    public void setX(double x) {
         this.x=x;
     }
 
     @Override
-    public void setY(int y) {
+    public void setY(double y) {
         this.y=y;
     }
 
@@ -32,7 +32,7 @@ public abstract class AbstractActor implements Behavior {
     public int getSizeY() {return sizeY; }
 
     @Override
-    public void setCoordinates(int x, int y) {
+    public void setCoordinates(double x, double y) {
         this.x=x;
         this.y=y;
         this.right=x+sizeX;

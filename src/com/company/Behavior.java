@@ -4,9 +4,9 @@ import java.awt.*;
 
 public interface Behavior {
     void painting(Graphics g);
-    int getX();
-    int getY();
-    void setX(int x);
-    void setY(int y);
-    void setCoordinates(int x,int y);
+    double getX();
+    double getY();
+    void setX(double x);
+    void setY(double y);
+    void setCoordinates(double x,double y);
 }

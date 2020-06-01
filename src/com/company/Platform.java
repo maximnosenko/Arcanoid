@@ -3,7 +3,7 @@ package com.company;
 import java.awt.*;
 
 public class Platform extends AbstractPlatform {
-    Platform(int x, int y, int maxX, int maxY) {
+    Platform(float x, float y, int maxX, int maxY) {
         super(x, y, maxX, maxY);
     }
 
@@ -12,8 +12,4 @@ public class Platform extends AbstractPlatform {
 
     }
 
-    @Override
-    public void setCoordinates(int x, int y) {
-
-    }
 }
