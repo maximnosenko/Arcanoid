@@ -4,6 +4,7 @@ public abstract class AbstractActor implements Behavior {
     double x,y;
     int sizeX,sizeY;//размер объекта
     double right,left,up,down;
+    double centerX,centerY;
 
     //getLeft,getLeft
 

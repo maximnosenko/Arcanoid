@@ -8,6 +8,8 @@ public class Habitat extends JPanel implements Runnable{
     Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
     Ball ball;
+    double x=120,y=300;
+    int sizeX=100,sizeY=100;
 
     public Habitat(Singleton singleton) {
         this.singleton = singleton;
@@ -16,9 +18,16 @@ public class Habitat extends JPanel implements Runnable{
         factory.createWall(0,0,840,10);
         factory.createWall(0,652,850,10);
         new Thread(this).start();
-        //factory.createBoll();
-        ball=new Ball(420,500,20,20);//420,500,20,20
+        ball=new Ball(420,500,20,20);
         new Thread(ball).start();
+        //for(int i=0;i<8;i++) {
+          //  for (int j = 0; j < 10; j++) {
+                factory.createBlock(350, y, sizeX, sizeY);
+            //    x=x+60;
+            //}
+            //x=120;
+            //y=y-35;
+        //}
         //платформу и стены сделать тут
     }
 
@@ -28,27 +37,26 @@ public class Habitat extends JPanel implements Runnable{
             actor.painting(graphics);
             int direct;
 
-            if(actor.down>ball.up&& ball.getX() > actor.left && ball.getX() < actor.right&&ball.down>actor.down)
+            if(actor.down>ball.up&& ball.centerX > actor.left && ball.centerX < actor.right&&ball.down>actor.down)
             {
                 direct=3;
                 ball.onCollision(actor,direct);
                 continue;
             }
-            if(actor.right>ball.left&&actor.right<ball.right&&ball.getY() > actor.up && ball.getY() < actor.down){
+            if(actor.right>ball.left&&actor.right<ball.right&&ball.centerY > actor.up && ball.centerY < actor.down){
                 direct=1;
                 ball.onCollision(actor,direct);
                 continue;
             }
-            if(actor.left<ball.right&&actor.right>ball.right&&ball.getY() > actor.up && ball.getY() < actor.down){
+            if(actor.left<ball.right&&actor.right>ball.right&&ball.centerY > actor.up && ball.centerY < actor.down){
                 direct=2;
                 ball.onCollision(actor,direct);
                 continue;
             }
-            if(actor.up<ball.down&&actor.right>ball.getX()&&actor.left<ball.getY()&&ball.up<actor.up)
+            if(actor.up<ball.down&&actor.right>ball.centerX&&actor.left<ball.centerX&&ball.up<actor.up)
             {
                 direct=4;
                 ball.onCollision(actor,direct);
-                continue;
             }
         }
         ball.painting(graphics);
@@ -64,8 +72,5 @@ public class Habitat extends JPanel implements Runnable{
                 going=false;
             }
         }
-        //проверка есть ли колизия каждые 100 милисекунд проверять
-        //проверить через цикл пересечения с шариком проверить не пересекаютсяли
-        //if(xsize(одного obj) - xsize(другого)) onColision
     }
 }

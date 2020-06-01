@@ -1,7 +1,7 @@
 package com.company;
 
 public interface Movable {
-    int getSpeed();
+    int getSpeed();//скорость шарика
     void setSpeed(int speed);
     void setXDir(double dirX);
     void setYDir(double dirY);

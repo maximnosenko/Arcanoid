@@ -7,12 +7,14 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     double dirX,dirY;//нужны для направления шарика
     boolean isMoving=true;
 
-    AbstractBall(double x, double y, int sizeX, int sizeY)//нужен бил Dir вообще
+    AbstractBall(double x, double y, int sizeX, int sizeY)
     {
         this.x=x;
         this.y=y;
         this.sizeX=sizeX;
         this.sizeY=sizeY;
+        this.centerX=x+sizeX/2;
+        this.centerY=y+sizeY/2;
     }
 
     abstract void setDir(double newX, double newY);
@@ -28,7 +30,7 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     }
 
     @Override
-    abstract public void run();//move и слип на 100 мс
+    abstract public void run();
 
     @Override
     public int getSpeed() {

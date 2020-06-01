@@ -5,9 +5,9 @@ import java.awt.*;
 public class Ball extends AbstractBall implements Movable {
     Ball(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
-        dirX=-0.6;
+        dirX=-0.3;
         dirY=0.8;
-        speed=2;
+        speed=5;
     }
 
     @Override
@@ -43,11 +43,10 @@ public class Ball extends AbstractBall implements Movable {
             }
             default:
         }
-    }//isMoveing false
-    //onColigen написать что шарик столкунлся, чтобы обрабатывать столкновение
+    }
 
     @Override
-    void setDir(double newX, double newY) {///////////////////////////
+    void setDir(double newX, double newY) {
         dirX=newX;
         dirY=newY;
     }

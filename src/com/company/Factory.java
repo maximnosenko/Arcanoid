@@ -1,7 +1,7 @@
 package com.company;
 
 public interface Factory {
-    void createBlock();
-    void createWall(int x1,int y1, int x2,int y2);
+    void createBlock(double x,double y,int sizeX,int sizeY);
+    void createWall(double x,double y, int sizeX,int sizeY);
     //void createBoll();
 }
