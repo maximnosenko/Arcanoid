@@ -8,5 +8,5 @@ public interface Movable {
     double getXDir();
     double getYDir();
     int ToggleMovement();//для остановления шарика
-    void onCollision();//проверка на столкновение
+    void onCollision(AbstractActor actor,int dir);//проверка на столкновение
 }

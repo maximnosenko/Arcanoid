@@ -3,7 +3,6 @@ package com.company;
 import java.awt.*;
 
 public class wall extends AbstractActor {
-   // private int x,y,sizeX,sizeY;
 
     wall(int x,int y, int sizeX,int sizeY){
         this.x=x;

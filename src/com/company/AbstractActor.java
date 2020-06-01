@@ -32,12 +32,13 @@ public abstract class AbstractActor implements Behavior {
     public int getSizeY() {return sizeY; }
 
     @Override
-    public void setCoordinates(int x,int y) {
+    public void setCoordinates(int x, int y) {
         this.x=x;
         this.y=y;
-        right=x+sizeX;
-        left=x;
-        up=y;
-        down=y+sizeY;
+        this.right=x+sizeX;
+        this.left=x;
+        this.up=y;
+        this.down=y+sizeY;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.company;
 
-public abstract class AbstractBoll extends AbstractActor implements Movable,Runnable,Distractible{
+public abstract class AbstractBall extends AbstractActor implements Movable,Runnable,Distractible{
 
     int minY;// для пересечения нижнего поля
     int speed;//скорость шарика
@@ -8,7 +8,7 @@ public abstract class AbstractBoll extends AbstractActor implements Movable,Runn
     boolean isMoving=true;
     Singleton singleton;
 
-    AbstractBoll(int x,int y,int sizeX,int sizeY)//нужен бил Dir вообще
+    AbstractBall(int x, int y, int sizeX, int sizeY)//нужен бил Dir вообще
     {
         this.x=x;
         this.y=y;
@@ -27,15 +27,6 @@ public abstract class AbstractBoll extends AbstractActor implements Movable,Runn
     public int ToggleMovement() {
         return 0;
     }
-
-    @Override
-    public void onCollision()
-    {
-        isMoving=false;
-        //return 0;
-    }//isMoveing false
-
-    //onColigen написать что шарик столкунлся, чтобы обрабатывать столкновение
 
     @Override
     abstract public void run();//move и слип на 100 мс
