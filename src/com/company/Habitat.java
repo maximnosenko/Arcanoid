@@ -9,7 +9,7 @@ public class Habitat extends JPanel implements Runnable{
     private ConcreteFactory factory= new ConcreteFactory();
     Ball ball;
     double x=120,y=300;
-    int sizeX=50,sizeY=20;
+    int sizeX=50,sizeY=25;
 
     public Habitat(Singleton singleton) {
         this.singleton = singleton;
@@ -63,8 +63,9 @@ public class Habitat extends JPanel implements Runnable{
             }
             if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<ball.getSizeX()/2){
                // System.out.println(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2)));
+                System.out.println("нижний правый");
                 direct=5;
-                //ball.onCollision(actor,6);
+                ball.onCollision(actor,6);
                 continue;
             }
             //System.out.println(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2)));
@@ -82,9 +83,10 @@ public class Habitat extends JPanel implements Runnable{
                 ball.onCollision(actor,direct);
                 continue;
             }
-            if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<ball.getSizeX()/2){
+            if(Math.sqrt(Math.pow(actor.left-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<ball.getSizeX()/2){
                 direct=8;
                 ball.onCollision(actor,direct);
+                System.out.println("нижний левый ");
             }
         }
         ball.painting(graphics);

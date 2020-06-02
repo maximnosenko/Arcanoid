@@ -43,7 +43,7 @@ public class Ball extends AbstractBall implements Movable {
             }
             case 5:{
                 dirX=Math.sqrt(0.5);
-                dirY=Math.sqrt(0.5);
+                dirY=-Math.sqrt(0.5);
                 break;
             }
             case 6:{
@@ -54,13 +54,13 @@ public class Ball extends AbstractBall implements Movable {
             }
             case 7:{
                 dirX=-Math.sqrt(0.5);
-                dirY=-Math.sqrt(0.5);
+                dirY=Math.sqrt(0.5);
                 //isMoving=false;
                 break;
             }
             case 8:{
                 dirX=-Math.sqrt(0.5);
-                dirY=Math.sqrt(0.5);
+                dirY=-Math.sqrt(0.5);
             }
             default:
         }
