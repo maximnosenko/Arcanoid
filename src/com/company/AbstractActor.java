@@ -3,10 +3,8 @@ package com.company;
 public abstract class AbstractActor implements Behavior {
     double x,y;
     int sizeX,sizeY;//размер объекта
-    double right,left,up,down;
-    double centerX,centerY;
-
-    //getLeft,getLeft
+    double right,left,up,down;//стороны объекта
+    double centerX,centerY;//центр стороны
 
     @Override
     public double getX() {

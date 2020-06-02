@@ -18,8 +18,8 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     @Override
     public void setCoordinates(double x, double y) {
         super.setCoordinates(x, y);
-        this.centerX=x+sizeX%2;
-        this.centerY=y+sizeY%2;
+        this.centerX=x+sizeX/2;
+        this.centerY=y+sizeY/2;
     }
 
     abstract void setDir(double newX, double newY);

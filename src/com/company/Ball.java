@@ -2,12 +2,12 @@ package com.company;
 
 import java.awt.*;
 
-public class Ball extends AbstractBall implements Movable {
+public class Ball extends AbstractBall {
     Ball(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
         dirX=0.6;//0.6
         dirY=0.8;//0.8
-        speed=5;
+        speed=3;
     }
 
     @Override
@@ -49,13 +49,11 @@ public class Ball extends AbstractBall implements Movable {
             case 6:{
                 dirX=Math.sqrt(0.5);
                 dirY=Math.sqrt(0.5);
-                //isMoving=false;
                 break;
             }
             case 7:{
                 dirX=-Math.sqrt(0.5);
                 dirY=Math.sqrt(0.5);
-                //isMoving=false;
                 break;
             }
             case 8:{
