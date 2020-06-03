@@ -3,11 +3,8 @@ package com.company;
 import java.awt.*;
 
 public class Platform extends AbstractPlatform {
-    AbstractBall ball;
-    Platform(double x, double y, int sizeX, int sizeY,AbstractBall ball) {
+    Platform(double x, double y, int sizeX, int sizeY) {
         super(x, y, sizeX, sizeY);
-        setCoordinates(this.x,this.y);
-        this.ball=ball;
     }
 
     @Override
@@ -20,27 +17,17 @@ public class Platform extends AbstractPlatform {
     @Override
     public void run() {
         while (isMoving) {
-            //synchronized (ball) {
+            if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX) {
+                setCoordinates((getX() + moveDirection * speed), getY());
+                if (!ballMoving)
+                    ball.setX(ball.getX() + moveDirection * speed);
+            }
 
-                if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX) {
-                    setCoordinates((getX() + moveDirection * speed), getY());
-                    if (ball.getXDir()==0&&moveDirection==1) {
-                        //ball.x+=5;
-                        ball.setX(ball.getX() + moveDirection * speed);
-                    }
-                    if(ball.getXDir()==0&&moveDirection==-1)
-                    {
-                       // ball.x-=5;
-                        ball.setX(ball.getX() + moveDirection * speed);
-                    }
-                }
-
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    isMoving = false;
-                }
-           // }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                isMoving = false;
+            }
         }
     }
 }

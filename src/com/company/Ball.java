@@ -3,10 +3,8 @@ package com.company;
 import java.awt.*;
 
 public class Ball extends AbstractBall {
-    Ball(double x, double y,int sizeX,int sizeY) {
-        super(x, y,sizeX,sizeY);
-        dirX=0;//0.6
-        dirY=0;//0.8
+    Ball(double x, double y,int sizeX,int sizeY, AbstractPlatform platform) {
+        super(x, y,sizeX,sizeY, platform);
         speed=3;
     }
 
@@ -73,13 +71,14 @@ public class Ball extends AbstractBall {
     }
 
     @Override
-    public void run() {
-        while(isMoving){
+    public synchronized void run() {
+        while(true){
+            platform.isBallMoving();
             setCoordinates(getX()+getXDir()*getSpeed(),getY()+getYDir()*getSpeed());
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                isMoving=false;
+                e.printStackTrace();
             }
         }
     }

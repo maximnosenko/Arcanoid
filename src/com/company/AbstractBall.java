@@ -1,43 +1,27 @@
 package com.company;
 
-public abstract class AbstractBall extends AbstractActor implements Movable,Runnable,Destructable{
+public abstract class AbstractBall extends AbstractActor implements Movable,Runnable{
 
     int minY;// для пересечения нижнего поля
     int speed;//скорость шарика
     double dirX,dirY,r;//нужны для направления шарика
-    boolean isMoving=true;
     int life=3;
+    AbstractPlatform platform;
 
-    AbstractBall(double x, double y, int sizeX, int sizeY)
+    AbstractBall(double x, double y, int sizeX, int sizeY, AbstractPlatform platform)
     {
-        this.x=x;
-        this.y=y;
-        this.sizeX=sizeX;
-        this.sizeY=sizeY;
-    }
-
-    @Override
-    public void setCoordinates(double x, double y) {
-        super.setCoordinates(x, y);
-        this.centerX=x+sizeX/2;
-        this.centerY=y+sizeY/2;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        setCoordinates(x, y);
+        this.platform = platform;
     }
 
     abstract void setDir(double newX, double newY);
 
     @Override
-    public void Destroy() {
-        //isMoving=false;
-        //life=life-1;
-    }
-
-    @Override
-    public void ToggleMovement() {
-        //isMoving=false;
-        dirX=0;
-        dirY=0;
+    public void DestroyBall() {
         life=life-1;
-        setCoordinates(420,570);
+        setCoordinates(platform.centerX - sizeX/2, platform.getY() - sizeY - 10);
     }
 
     @Override

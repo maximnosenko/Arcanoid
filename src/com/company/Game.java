@@ -39,11 +39,7 @@ public class Game {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
-                if(e.getKeyCode()==KeyEvent.VK_RIGHT)
-                {
-                    habitat.platform.stay();
-                }
-                if(e.getKeyCode()==KeyEvent.VK_LEFT)
+                if(e.getKeyCode()==KeyEvent.VK_RIGHT || e.getKeyCode()==KeyEvent.VK_LEFT)
                 {
                     habitat.platform.stay();
                 }
@@ -55,8 +51,10 @@ public class Game {
                 super.mousePressed(e);
                 if(e.getButton()==MouseEvent.BUTTON1)
                 {
-                    if(habitat.ball.dirX==0)
-                    habitat.ball.setDir(e.getX()-5,e.getY()-30);
+                    if(!habitat.platform.ballMoving) {
+                        habitat.ball.setDir(e.getX(), e.getY());
+                        habitat.platform.ToggleBallMovement();
+                    }
                 }
             }
         });

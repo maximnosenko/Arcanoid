@@ -5,13 +5,16 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
     int speed=5,maxX=730,minX=10;
     int moveDirection=0;
     boolean isMoving=true;
+    int ballSize = 20;
+    AbstractBall ball;
+    boolean ballMoving;
 
     AbstractPlatform(double x,double y,int sizeX,int sizeY)
     {
-        this.x=x;
-        this.y=y;
         this.sizeX=sizeX;
         this.sizeY=sizeY;
+        setCoordinates(x,y);
+        createBall("Ball");
     }
 
     @Override
@@ -28,7 +31,34 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
         moveDirection=0;
     }
 
-    @Override
-    public void createBall() {
+    public void createBall(String type) {
+        switch (type) {
+            case "Ball":
+                ball = new Ball(centerX - ballSize / 2, getY() - ballSize - 10, ballSize, ballSize, this);
+                break;
+        }
+        ballMoving = false;
+        new Thread(ball).start();
+    }
+
+    public AbstractBall getBall()
+    {
+        return ball;
+    }
+
+    public synchronized void isBallMoving() {
+        try {
+            if(!ballMoving)
+                wait();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void ToggleBallMovement() {
+        if (!ballMoving)
+            notifyAll();
+        ballMoving = !ballMoving;
     }
 }
