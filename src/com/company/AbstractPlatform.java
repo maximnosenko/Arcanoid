@@ -30,6 +30,5 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
 
     @Override
     public void createBall() {
-
     }
 }

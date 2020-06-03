@@ -5,8 +5,8 @@ import java.awt.*;
 public class Ball extends AbstractBall {
     Ball(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
-        dirX=0.6;//0.6
-        dirY=0.8;//0.8
+        dirX=0;//0.6
+        dirY=0;//0.8
         speed=3;
     }
 
@@ -66,8 +66,10 @@ public class Ball extends AbstractBall {
 
     @Override
     void setDir(double newX, double newY) {
-        dirX=newX;
-        dirY=newY;
+        r=Math.sqrt(Math.pow(newX-centerX,2)+Math.pow(newY-centerY,2));
+        dirX=(newX-centerX)/r;
+        dirY=(newY-centerY)/r;
+        //isMoving=true;
     }
 
     @Override

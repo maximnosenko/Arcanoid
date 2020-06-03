@@ -21,9 +21,8 @@ public class Habitat extends JPanel implements Runnable{
         factory.createWall(0,0,840,10);
         factory.createWall(0,652,850,10);
         new Thread(this).start();
-        ball=new Ball(420,500,20,20);
-        new Thread(ball).start();
-        platform=new Platform(400,600,100,25);//370,600,100,25
+        ball=new Ball(420,570,20,20);
+        platform=new Platform(380,600,100,25,ball);//370,600,100,25
         new Thread(platform).start();
         singleton.getVector().add(platform);
         for(int i=0;i<8;i++) {
@@ -46,7 +45,6 @@ public class Habitat extends JPanel implements Runnable{
         }
         platform.painting(graphics);
         ball.painting(graphics);
-
     }
 
     public boolean check(AbstractActor actor){//проверка с каокой стороной шарик столкнулся
@@ -69,10 +67,14 @@ public class Habitat extends JPanel implements Runnable{
         }
         if(actor.up<ball.down&&actor.right>ball.centerX&&actor.left<ball.centerX&&ball.up<actor.up)
         {
+
             direct=4;
             ball.onCollision(actor,direct);
+            if(actor instanceof Wall) {
+                ball.ToggleMovement();
+                //rewriting();
+            }
             return true;
-
         }
         if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<ball.getSizeX()/2){
             //System.out.println("нижний правый");
@@ -112,6 +114,7 @@ public class Habitat extends JPanel implements Runnable{
     @Override
     public void run() {
         while (going) {
+
             try {
                 Thread.sleep(10);
                 repaint();

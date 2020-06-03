@@ -3,6 +3,8 @@ package com.company;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 //Реализация интерфейсов и всякого прикольного
 public class Game {
@@ -12,6 +14,7 @@ public class Game {
 
 
     public Game(){
+        new Thread(habitat.ball).start();
         frame=new JFrame("Arkanoid");
         frame.add(habitat);
         System.out.println(singleton.getVector());
@@ -43,6 +46,17 @@ public class Game {
                 if(e.getKeyCode()==KeyEvent.VK_LEFT)
                 {
                     habitat.platform.stay();
+                }
+            }
+        });
+        frame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if(e.getButton()==MouseEvent.BUTTON1)
+                {
+                    if(habitat.ball.dirX==0)
+                    habitat.ball.setDir(e.getX()-5,e.getY()-30);
                 }
             }
         });

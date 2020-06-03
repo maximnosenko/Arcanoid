@@ -14,6 +14,5 @@ public abstract class AbstractBlock extends AbstractActor implements Destructabl
     //удаление
     @Override
     public void Destroy(){
-
     }
 }
