@@ -74,12 +74,21 @@ public class Ball extends AbstractBall {
 
     @Override
     public void run() {
-        while(isMoving){
-            setCoordinates(getX()+getXDir()*getSpeed(),getY()+getYDir()*getSpeed());
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                isMoving=false;
+            while (isMoving) {
+                synchronized (this) {
+                setCoordinates(getX() + getXDir() * getSpeed(), getY() + getYDir() * getSpeed());
+                if (ready) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    isMoving = false;
+                }
             }
         }
     }

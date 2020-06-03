@@ -29,10 +29,21 @@ public class Game {
                 if(e.getKeyCode()==KeyEvent.VK_RIGHT)
                 {
                     habitat.platform.moveRight();
+                        synchronized (habitat.platform) {
+                            habitat.platform.notify();
+                        }
                 }
                 if(e.getKeyCode()==KeyEvent.VK_LEFT)
                 {
                     habitat.platform.moveLeft();
+                    synchronized (habitat.ball)
+                    {
+                        habitat.ball.notify();
+                    }
+                    synchronized (habitat.platform)
+                    {
+                        habitat.platform.notify();
+                    }
                 }
             }
 
@@ -55,8 +66,14 @@ public class Game {
                 super.mousePressed(e);
                 if(e.getButton()==MouseEvent.BUTTON1)
                 {
+                    habitat.ball.ready=false;
+                    synchronized (habitat.ball) {
+                        habitat.ball.notify();
+                        //habitat.ball.ready=false;
+                    }
                     if(habitat.ball.dirX==0)
                     habitat.ball.setDir(e.getX()-5,e.getY()-30);
+
                 }
             }
         });

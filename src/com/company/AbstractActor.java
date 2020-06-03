@@ -38,6 +38,8 @@ public abstract class AbstractActor implements Behavior {
         this.left=x;
         this.up=y;
         this.down=y+sizeY;
+        this.centerX=x+sizeX/2;
+        this.centerY=y+sizeY/2;
     }
 
 }

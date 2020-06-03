@@ -5,7 +5,7 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     int minY;// для пересечения нижнего поля
     int speed;//скорость шарика
     double dirX,dirY,r;//нужны для направления шарика
-    boolean isMoving=true;
+    boolean isMoving=true,ready=true;
     int life=3;
 
     AbstractBall(double x, double y, int sizeX, int sizeY)
@@ -14,13 +14,6 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
         this.y=y;
         this.sizeX=sizeX;
         this.sizeY=sizeY;
-    }
-
-    @Override
-    public void setCoordinates(double x, double y) {
-        super.setCoordinates(x, y);
-        this.centerX=x+sizeX/2;
-        this.centerY=y+sizeY/2;
     }
 
     abstract void setDir(double newX, double newY);
@@ -33,11 +26,12 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
 
     @Override
     public void ToggleMovement() {
+        ready=true;
         //isMoving=false;
         dirX=0;
         dirY=0;
         life=life-1;
-        setCoordinates(420,570);
+        //setCoordinates(getX(),getY());
     }
 
     @Override

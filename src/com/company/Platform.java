@@ -20,27 +20,33 @@ public class Platform extends AbstractPlatform {
     @Override
     public void run() {
         while (isMoving) {
-            //synchronized (ball) {
-
-                if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX) {
+            synchronized (this){
+            synchronized (ball) {
+                if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX&&moveDirection!=0) {
+                    //ball.notify();
                     setCoordinates((getX() + moveDirection * speed), getY());
-                    if (ball.getXDir()==0&&moveDirection==1) {
+                    if (ball.getXDir() == 0 && ball.getYDir() == 0 && moveDirection == 1) {
                         //ball.x+=5;
                         ball.setX(ball.getX() + moveDirection * speed);
                     }
-                    if(ball.getXDir()==0&&moveDirection==-1)
-                    {
-                       // ball.x-=5;
+                    if (ball.getXDir() == 0 && ball.getYDir() == 0 && moveDirection == -1) {
+                        // ball.x-=5;
                         ball.setX(ball.getX() + moveDirection * speed);
                     }
                 }
-
+            }
+            if(moveDirection==0) {
                 try {
-                    Thread.sleep(10);
+                    wait();
                 } catch (InterruptedException e) {
-                    isMoving = false;
-                }
-           // }
+                    e.printStackTrace();
+                } }
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                isMoving = false;
+            }
         }
     }
 }

@@ -9,8 +9,8 @@ public class Habitat extends JPanel implements Runnable{
     boolean going= true;
     Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
-    Ball ball;
-    Platform platform;
+    final Ball ball;
+    final Platform platform;
     double x=120,y=300;
     int sizeX=50,sizeY=25;
 
@@ -21,7 +21,7 @@ public class Habitat extends JPanel implements Runnable{
         factory.createWall(0,0,840,10);
         factory.createWall(0,652,850,10);
         new Thread(this).start();
-        ball=new Ball(420,570,20,20);
+        ball=new Ball(420,575,20,20);
         platform=new Platform(380,600,100,25,ball);//370,600,100,25
         new Thread(platform).start();
         singleton.getVector().add(platform);
@@ -72,6 +72,8 @@ public class Habitat extends JPanel implements Runnable{
             ball.onCollision(actor,direct);
             if(actor instanceof Wall) {
                 ball.ToggleMovement();
+                ball.setX(platform.getX()+40);
+                ball.setY(platform.getY()-platform.sizeY);
                 //rewriting();
             }
             return true;
@@ -100,6 +102,7 @@ public class Habitat extends JPanel implements Runnable{
             direct=8;
             ball.onCollision(actor,direct);
             //System.out.println("нижний левый ");
+            return true;
         }
         return false;
     }
@@ -113,14 +116,17 @@ public class Habitat extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        while (going) {
-
-            try {
-                Thread.sleep(10);
-                repaint();
-            } catch (InterruptedException e) {
-                going=false;
+        //synchronized (this) {
+            //synchronized (singleton.getVector()) {
+            while (going) {
+                try {
+                    Thread.sleep(10);
+                    repaint();
+                } catch (InterruptedException e) {
+                    going = false;
+                }
             }
-        }
+            //}
+        //}
     }
 }
