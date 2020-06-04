@@ -3,6 +3,7 @@ package com.company;
 import java.awt.*;
 
 public class Ball extends AbstractBall {
+
     Ball(double x, double y,int sizeX,int sizeY, AbstractPlatform platform) {
         super(x, y,sizeX,sizeY, platform);
         speed=3;
@@ -67,6 +68,7 @@ public class Ball extends AbstractBall {
         r=Math.sqrt(Math.pow(newX-centerX,2)+Math.pow(newY-centerY,2));
         dirX=(newX-centerX)/r;
         dirY=(newY-centerY)/r;
+        go=true;
         //isMoving=true;
     }
 

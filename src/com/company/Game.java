@@ -11,18 +11,19 @@ import java.awt.event.MouseEvent;
 public class Game {
     JFrame frame;
     private Singleton singleton=Singleton.getInstance();
-    private Habitat habitat=new Habitat(singleton);
     Interface anInterface=new Interface(singleton);
+    private Habitat habitat=new Habitat(singleton,anInterface);
 
+    boolean going=false;
 
     public Game(){
         //new Thread(habitat.ball).start();
-        anInterface.setLayout(null);
+        //anInterface.setLayout(null);
         frame=new JFrame("Arkanoid");
         //habitat.setBackground(Color.BLUE);
         frame.add(habitat, BorderLayout.CENTER);
-        anInterface.setBackground(Color.RED);
-        frame.add(anInterface,BorderLayout.EAST);
+        //anInterface.setBackground(Color.RED);
+        frame.add(anInterface,BorderLayout.NORTH);
         System.out.println(singleton.getVector());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(850,700);
@@ -58,6 +59,10 @@ public class Game {
                 if(e.getButton()==MouseEvent.BUTTON1)
                 {
                     if(!habitat.platform.ballMoving) {
+
+                        habitat.go=true;
+                        anInterface.starterTime();
+                        //System.out.println(habitat.go);
                         habitat.ball.setDir(e.getX()-5, e.getY()-30);
                         habitat.platform.ToggleBallMovement();//запускает потоки
                     }

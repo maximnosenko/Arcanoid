@@ -9,6 +9,7 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     double dirX,dirY,r;//нужны для направления шарика
     int life=3;
     AbstractPlatform platform;
+    boolean go=true;
 
     AbstractBall(double x, double y, int sizeX, int sizeY, AbstractPlatform platform)
     {
@@ -19,8 +20,6 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     }
 
     abstract void setDir(double newX, double newY);
-
-    abstract public void paintingCount(Graphics g,int xball);
 
     @Override
     public void DestroyBall() {//уменьшает жизни и ставит шарик на исходную

@@ -6,15 +6,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Habitat extends JPanel implements Runnable{
-    boolean going= true;
+    boolean going= true,go=true;
     Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
     AbstractBall ball;
     AbstractPlatform platform;
     double x=120,y=300;
-    int sizeX=50,sizeY=25,xball=10;
+    int sizeX=50,sizeY=25;
+    Interface anInterface;
 
-    public Habitat(Singleton singleton) {
+    public Habitat(Singleton singleton,Interface anInterface) {
         this.singleton = singleton;
         factory.createWall(0,0,10,700);
         factory.createWall(825,0,10,700);
@@ -33,6 +34,7 @@ public class Habitat extends JPanel implements Runnable{
             x=120;
             y=y-35;
         }
+        this.anInterface=anInterface;
     }
 
     public void paint(Graphics graphics) {
@@ -74,6 +76,9 @@ public class Habitat extends JPanel implements Runnable{
             direct=4;
             ball.onCollision(actor,direct);
             if(actor instanceof Wall) {
+                //go=false;
+                anInterface.timeStopped();
+                singleton.life-=1;
                 platform.ToggleBallMovement();//
                 ball.DestroyBall();//обновление шарика
                 //rewriting();
@@ -119,7 +124,7 @@ public class Habitat extends JPanel implements Runnable{
     @Override
     public void run() {
         while (going) {
-
+            //System.out.println(time);
             try {
                 Thread.sleep(10);
                 repaint();

@@ -4,58 +4,98 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Interface extends JPanel implements Runnable {
-    int xLife=10;
-    boolean going=true;
+public class Interface extends JPanel {
     Singleton singleton=Singleton.getInstance();
+    int time=0,xball,currentTime=0;
+    //Habitat habitat;
+    private Timer mTimer;
 
     Interface(Singleton singleton){
-        setBackground(Color.RED);
-       // new Thread().start();
         this.singleton=singleton;
-        //System.out.println(getWidth());
-        Buttons();
+       // this.habitat=habitat;
+        Button();
     }
 
-    public void paint(Graphics graphics)
+    public void starterTime()//переименовать
     {
-        //graphics.setColor(Color.BLUE);
-        for(int i=0;i<singleton.life;i++) {
-            graphics.setColor(Color.RED);
-            graphics.fillOval(0,0,10,10);
-            graphics.drawOval(0,0,10,10);
-            xLife+=10;
-            if(singleton.life==0)
-            {
-                going=false;
-            }
-        }
+        mTimer = new Timer();
+        mTimer.schedule(new Updater(this),0,1000);
     }
 
-    public void Buttons(){
-        JButton start=new JButton();
-        start.setFocusable(false);
-        start.addActionListener(new ActionListener() {
+    public void timeStopped()
+    {
+        mTimer.cancel();
+    }
+
+    public void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
+        graphics.setFont(new Font("Times Roman", Font.BOLD, 13));
+        graphics.drawString("Simulation " + getTime() + "s",0, 30);
+
+            if(singleton.life>=1) {
+                graphics.setColor(Color.RED);
+                graphics.fillOval(20, 0, 15, 15);
+                graphics.drawOval(20, 0, 15, 15);
+            }
+            if(singleton.life>=2) {
+                graphics.setColor(Color.RED);
+                graphics.fillOval(40, 0, 15, 15);
+                graphics.drawOval(40, 0, 15, 15);
+            }
+            if(singleton.life>=3) {
+                graphics.setColor(Color.RED);
+                graphics.fillOval(60, 0, 15, 15);
+                graphics.drawOval(60, 0, 15, 15);
+            }
+            //xball+=20;
+        repaint();
+
+    }
+
+    public void Button(){
+        JButton restart=new JButton("restart");
+        restart.setFocusable(false);
+        restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
             }
         });
-        this.add(start);
-        start.setBounds(50,70,10,10);
+        restart.setBounds(0,25,25,25);
+        add(restart);
     }
 
-    @Override
-    public void run() {
-        while (going)
+
+    private class Updater extends TimerTask {
+        private Interface anInterface;
+        int time=0;
+        //private boolean FirstRun=true;
+        public Updater(Interface inter)
         {
-            try {
-                Thread.sleep(10);
-                repaint();
-            } catch (InterruptedException e) {
-                going=false;
-            }
+            anInterface=inter;
+        }
+
+        public Updater(ActionListener actionListener) {
+        }
+        @Override
+        public void run() {
+            time +=1;
+            setCurrentTime(time);
+            //System.out.println(currentTime);
+            //mHabitat.Update(currentTime);
         }
     }
+
+    public void setCurrentTime(int time){
+        currentTime=time;
+        System.out.println(currentTime);
+    }
+    private int getTime()
+    {
+        return currentTime;
+    }
+
 }
