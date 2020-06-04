@@ -3,10 +3,8 @@ package com.company;
 import java.awt.*;
 
 public class Ball extends AbstractBall {
-    Ball(double x, double y,int sizeX,int sizeY) {
-        super(x, y,sizeX,sizeY);
-        dirX=0;//0.6
-        dirY=0;//0.8
+    Ball(double x, double y,int sizeX,int sizeY, AbstractPlatform platform) {
+        super(x, y,sizeX,sizeY, platform);
         speed=3;
     }
 
@@ -65,30 +63,29 @@ public class Ball extends AbstractBall {
     }
 
     @Override
-    void setDir(double newX, double newY) {
+    void setDir(double newX, double newY) {//получается координаты мышки и задает нужное направление
         r=Math.sqrt(Math.pow(newX-centerX,2)+Math.pow(newY-centerY,2));
         dirX=(newX-centerX)/r;
         dirY=(newY-centerY)/r;
         //isMoving=true;
     }
 
+    public void paintingCount(Graphics g,int xball)
+    {
+        g.setColor(Color.RED);
+        g.fillOval(xball,10,15,15);
+        g.drawOval(xball,10,15,15);
+    }
+
     @Override
-    public void run() {
-            while (isMoving) {
-                synchronized (this) {
-                setCoordinates(getX() + getXDir() * getSpeed(), getY() + getYDir() * getSpeed());
-                if (ready) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    isMoving = false;
-                }
+    public synchronized void run() {
+        while(true){
+            platform.isBallMoving();
+            setCoordinates(getX()+getXDir()*getSpeed(),getY()+getYDir()*getSpeed());
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

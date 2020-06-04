@@ -9,10 +9,10 @@ public class Habitat extends JPanel implements Runnable{
     boolean going= true;
     Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
-    final Ball ball;
-    final Platform platform;
+    AbstractBall ball;
+    AbstractPlatform platform;
     double x=120,y=300;
-    int sizeX=50,sizeY=25;
+    int sizeX=50,sizeY=25,xball=10;
 
     public Habitat(Singleton singleton) {
         this.singleton = singleton;
@@ -21,8 +21,8 @@ public class Habitat extends JPanel implements Runnable{
         factory.createWall(0,0,840,10);
         factory.createWall(0,652,850,10);
         new Thread(this).start();
-        ball=new Ball(420,575,20,20);
-        platform=new Platform(380,600,100,25,ball);//370,600,100,25
+        platform = new Platform(380, 600, 100, 25);//370,600,100,25
+        ball = platform.getBall();
         new Thread(platform).start();
         singleton.getVector().add(platform);
         for(int i=0;i<8;i++) {
@@ -38,11 +38,14 @@ public class Habitat extends JPanel implements Runnable{
     public void paint(Graphics graphics) {
         super.paintComponent(graphics);
         for(int i=0;i<singleton.getVector().size();i++){
-            singleton.getVector().get(i).painting(graphics);
+            singleton.getVector().get(i).painting(graphics);//из-за него моргает
             if(check(singleton.getVector().get(i))){
                 removeBlock(singleton.getVector().get(i));
             }
         }
+        //ball.paintingCount(graphics,10);
+        //ball.paintingCount(graphics,30);
+        //ball.paintingCount(graphics,50);
         platform.painting(graphics);
         ball.painting(graphics);
     }
@@ -71,9 +74,8 @@ public class Habitat extends JPanel implements Runnable{
             direct=4;
             ball.onCollision(actor,direct);
             if(actor instanceof Wall) {
-                ball.ToggleMovement();
-                ball.setX(platform.getX()+40);
-                ball.setY(platform.getY()-platform.sizeY);
+                platform.ToggleBallMovement();//
+                ball.DestroyBall();//обновление шарика
                 //rewriting();
             }
             return true;
@@ -101,8 +103,8 @@ public class Habitat extends JPanel implements Runnable{
         if(Math.sqrt(Math.pow(actor.left-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<ball.getSizeX()/2){
             direct=8;
             ball.onCollision(actor,direct);
-            //System.out.println("нижний левый ");
             return true;
+            //System.out.println("нижний левый ");
         }
         return false;
     }
@@ -116,17 +118,14 @@ public class Habitat extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        //synchronized (this) {
-            //synchronized (singleton.getVector()) {
-            while (going) {
-                try {
-                    Thread.sleep(10);
-                    repaint();
-                } catch (InterruptedException e) {
-                    going = false;
-                }
+        while (going) {
+
+            try {
+                Thread.sleep(10);
+                repaint();
+            } catch (InterruptedException e) {
+                going=false;
             }
-            //}
-        //}
+        }
     }
 }
