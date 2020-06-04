@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class Game {
     JFrame frame;
     private Singleton singleton=Singleton.getInstance();
-    Interface anInterface=new Interface(singleton);
+    Interface anInterface=new Interface(singleton, this);
     private Habitat habitat=new Habitat(singleton,anInterface);
 
     boolean going=false;
@@ -61,7 +61,7 @@ public class Game {
                     if(!habitat.platform.ballMoving) {
 
                         habitat.go=true;
-                        anInterface.starterTime();
+                        //anInterface.starterTime();
                         //System.out.println(habitat.go);
                         habitat.ball.setDir(e.getX()-5, e.getY()-30);
                         habitat.platform.ToggleBallMovement();//запускает потоки
@@ -69,5 +69,17 @@ public class Game {
                 }
             }
         });
+    }
+
+    public void Restart()
+    {
+        anInterface.timeStopped();
+        singleton.getVector().removeAllElements();
+        singleton.life = 3;
+        singleton.SetPoints(0);
+        habitat.setupHabitat();
+        habitat.ball.DestroyBall();
+        habitat.platform.ToggleBallMovement();
+        anInterface.starterTime();
     }
 }

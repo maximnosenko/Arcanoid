@@ -12,11 +12,14 @@ public class Interface extends JPanel {
     int time=0,xball,currentTime=0;
     //Habitat habitat;
     private Timer mTimer;
+    private Game game;
 
-    Interface(Singleton singleton){
+    Interface(Singleton singleton, Game game){
         this.singleton=singleton;
+        this.game = game;
        // this.habitat=habitat;
         Button();
+        starterTime();
     }
 
     public void starterTime()//переименовать
@@ -33,25 +36,15 @@ public class Interface extends JPanel {
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
         graphics.setFont(new Font("Times Roman", Font.BOLD, 13));
-        graphics.drawString("Simulation " + getTime() + "s",0, 30);
-
-            if(singleton.life>=1) {
-                graphics.setColor(Color.RED);
-                graphics.fillOval(20, 0, 15, 15);
-                graphics.drawOval(20, 0, 15, 15);
-            }
-            if(singleton.life>=2) {
-                graphics.setColor(Color.RED);
-                graphics.fillOval(40, 0, 15, 15);
-                graphics.drawOval(40, 0, 15, 15);
-            }
-            if(singleton.life>=3) {
-                graphics.setColor(Color.RED);
-                graphics.fillOval(60, 0, 15, 15);
-                graphics.drawOval(60, 0, 15, 15);
-            }
+        graphics.drawString("Time " + getTime() + "s",100, 25);
+        graphics.drawString("Points: " + singleton.Getpoints(), 200, 25);
+        graphics.setColor(Color.RED);
+        for (int i=0; i < singleton.life;i++) {
+            graphics.fillOval(5 + i*20, 12, 15, 15);
+            graphics.drawOval(5 + i*20, 12, 15, 15);
+        }
             //xball+=20;
-        repaint();
+        //repaint();
 
     }
 
@@ -61,7 +54,7 @@ public class Interface extends JPanel {
         restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                game.Restart();
             }
         });
         restart.setBounds(0,25,25,25);
@@ -84,6 +77,7 @@ public class Interface extends JPanel {
         public void run() {
             time +=1;
             setCurrentTime(time);
+            anInterface.repaint();
             //System.out.println(currentTime);
             //mHabitat.Update(currentTime);
         }

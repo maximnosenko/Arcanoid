@@ -6,6 +6,7 @@ public class Block extends AbstractBlock {
     Block(double x, double y,int sizeX,int sizeY) {
         super(x, y,sizeX,sizeY);
         setCoordinates(x,y);
+        points = 100;
     }
 
     @Override

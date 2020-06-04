@@ -11,30 +11,19 @@ public class Habitat extends JPanel implements Runnable{
     private ConcreteFactory factory= new ConcreteFactory();
     AbstractBall ball;
     AbstractPlatform platform;
-    double x=120,y=300;
+    //double x=120,y=300;
     int sizeX=50,sizeY=25;
     Interface anInterface;
 
     public Habitat(Singleton singleton,Interface anInterface) {
         this.singleton = singleton;
-        factory.createWall(0,0,10,700);
-        factory.createWall(825,0,10,700);
-        factory.createWall(0,0,840,10);
-        factory.createWall(0,652,850,10);
         new Thread(this).start();
         platform = new Platform(380, 600, 100, 25);//370,600,100,25
         ball = platform.getBall();
         new Thread(platform).start();
         singleton.getVector().add(platform);
-        for(int i=0;i<8;i++) {
-            for (int j = 0; j < 10; j++) {
-                factory.createBlock(x, y, sizeX, sizeY);
-                x=x+60;
-            }
-            x=120;
-            y=y-35;
-        }
         this.anInterface=anInterface;
+        setupHabitat();
     }
 
     public void paint(Graphics graphics) {
@@ -49,7 +38,8 @@ public class Habitat extends JPanel implements Runnable{
         //ball.paintingCount(graphics,30);
         //ball.paintingCount(graphics,50);
         platform.painting(graphics);
-        ball.painting(graphics);
+        if (going)
+            ball.painting(graphics);
     }
 
     public boolean check(AbstractActor actor){//проверка с каокой стороной шарик столкнулся
@@ -77,11 +67,17 @@ public class Habitat extends JPanel implements Runnable{
             ball.onCollision(actor,direct);
             if(actor instanceof Wall) {
                 //go=false;
-                anInterface.timeStopped();
+                //anInterface.timeStopped();
                 singleton.life-=1;
-                platform.ToggleBallMovement();//
-                ball.DestroyBall();//обновление шарика
-                //rewriting();
+                anInterface.repaint();
+                if (singleton.life == 0) {
+                    GameOver();
+                }
+                else {
+                    ball.DestroyBall();
+                    platform.ToggleBallMovement();//
+                    //rewriting();
+                }
             }
             return true;
         }
@@ -118,6 +114,20 @@ public class Habitat extends JPanel implements Runnable{
         if(actor instanceof AbstractBlock)
         {
             singleton.getVector().remove(actor);
+            singleton.AddPoints(((AbstractBlock) actor).points);
+        }
+    }
+
+    public void setupHabitat()
+    {
+        factory.createWall(0,0,10,700);
+        factory.createWall(825,0,10,700);
+        factory.createWall(0,0,840,10);
+        factory.createWall(0,652,850,10);
+        for(int i=0;i<10;i++) {
+            for (int j = 0; j < 8; j++) {
+                factory.createBlock(120 + i*60, 300 - j*35, sizeX, sizeY);
+            }
         }
     }
 
@@ -132,5 +142,13 @@ public class Habitat extends JPanel implements Runnable{
                 going=false;
             }
         }
+    }
+
+    public void GameOver()
+    {
+        going = false;
+        repaint();
+        anInterface.timeStopped();
+        //Вызвать диалог, в котором написано game over, есть кнопка перезапуск, есть кнопка выход и есть твои набранные очки
     }
 }
