@@ -8,7 +8,7 @@ public class Platform extends AbstractPlatform {
     }
 
     @Override
-    public void painting(Graphics g) {
+    public void painting(Graphics g) {//рисование панели
         g.setColor(Color.DARK_GRAY);
         g.fillRect((int)x,(int)y,sizeX,sizeY);
         g.drawRect((int)x,(int)y,sizeX,sizeY);
@@ -22,7 +22,6 @@ public class Platform extends AbstractPlatform {
                 if (!ballMoving)
                     ball.setX(ball.getX() + moveDirection * speed);
             }
-
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

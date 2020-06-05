@@ -2,12 +2,12 @@ package com.company;
 
 public abstract class AbstractPlatform extends AbstractActor implements Runnable,PlayerControl {
 
-    int speed=5,maxX=730,minX=10;
-    int moveDirection=0;
-    boolean isMoving=true;
-    int ballSize = 20;
-    AbstractBall ball;
-    boolean ballMoving;
+    public int speed=5,maxX=730,minX=10;//скорость и ограничения панели
+    public int moveDirection=0;//движение платформы
+    public boolean isMoving=true;//запускает работу потока
+    public int ballSize = 20;//Размер Шарика
+    public AbstractBall ball;
+    public boolean ballMoving;//запускает работу движение шарика
 
     AbstractPlatform(double x,double y,int sizeX,int sizeY)
     {
@@ -25,7 +25,7 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
     @Override
     public void moveLeft() {//движение платформы вправо
         moveDirection=-1;
-    }
+    }//движение платформы влево
 
     public void stay(){//остановка платформы
         moveDirection=0;
@@ -38,7 +38,7 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
                 break;
         }
         ballMoving = false;
-        new Thread(ball).start();//? т.к. в game есть
+        new Thread(ball).start();
     }
 
     public AbstractBall getBall()
@@ -56,7 +56,7 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
         }
     }
 
-    public synchronized void ToggleBallMovement() {//если мячик запушен, то поток возобновляется
+    public synchronized void ToggleBallMovement() {//Возобновляет поток
         if (!ballMoving)
             notifyAll();
         ballMoving = !ballMoving;

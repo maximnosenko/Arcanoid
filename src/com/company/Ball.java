@@ -10,14 +10,14 @@ public class Ball extends AbstractBall {
     }
 
     @Override
-    public void painting(Graphics g) {
+    public void painting(Graphics g) {//Рисование шарика
         g.setColor(Color.RED);
         g.fillOval((int)x,(int)y,sizeX,sizeY);
         g.drawOval((int)x,(int)y,sizeX,sizeY);
     }
 
     @Override
-    public void onCollision(AbstractActor actor,int dir)//Moveble
+    public void onCollision(AbstractActor actor,int dir)//осткок шарика от объектов
     {
         switch (dir){
             case 1: {
@@ -69,14 +69,6 @@ public class Ball extends AbstractBall {
         dirX=(newX-centerX)/r;
         dirY=(newY-centerY)/r;
         go=true;
-        //isMoving=true;
-    }
-
-    public void paintingCount(Graphics g,int xball)
-    {
-        g.setColor(Color.RED);
-        g.fillOval(xball,10,15,15);
-        g.drawOval(xball,10,15,15);
     }
 
     @Override

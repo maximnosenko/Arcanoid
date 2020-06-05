@@ -6,53 +6,41 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Habitat extends JPanel implements Runnable{
-    boolean going= true,go=true;
-    Singleton singleton;
+    public boolean going= true,go=true;
+    private Singleton singleton;
     private ConcreteFactory factory= new ConcreteFactory();
-    AbstractBall ball;
-    AbstractPlatform platform;
-    double x=120,y=300;
-    int sizeX=50,sizeY=25;
-    Interface anInterface;
+    public AbstractBall ball;
+    public AbstractPlatform platform;
+    private int sizeX=50,sizeY=25;
+    public Interface anInterface;
+    private Game game;
 
-    public Habitat(Singleton singleton,Interface anInterface) {
+    public Habitat(Singleton singleton,Interface anInterface,Game game) {
         this.singleton = singleton;
-        factory.createWall(0,0,10,700);
-        factory.createWall(825,0,10,700);
-        factory.createWall(0,0,840,10);
-        factory.createWall(0,652,850,10);
         new Thread(this).start();
-        platform = new Platform(380, 600, 100, 25);//370,600,100,25
+        platform = new Platform(380, 600, 100, 25);
         ball = platform.getBall();
         new Thread(platform).start();
-        singleton.getVector().add(platform);
-        for(int i=0;i<8;i++) {
-            for (int j = 0; j < 10; j++) {
-                factory.createBlock(x, y, sizeX, sizeY);
-                x=x+60;
-            }
-            x=120;
-            y=y-35;
-        }
+
         this.anInterface=anInterface;
+        setupHabitat();
+        this.game=game;
     }
 
-    public void paint(Graphics graphics) {
+    public void paint(Graphics graphics) {//отрисовывает все объекты
         super.paintComponent(graphics);
         for(int i=0;i<singleton.getVector().size();i++){
-            singleton.getVector().get(i).painting(graphics);//из-за него моргает
+            singleton.getVector().get(i).painting(graphics);
             if(check(singleton.getVector().get(i))){
                 removeBlock(singleton.getVector().get(i));
             }
         }
-        //ball.paintingCount(graphics,10);
-        //ball.paintingCount(graphics,30);
-        //ball.paintingCount(graphics,50);
         platform.painting(graphics);
-        ball.painting(graphics);
+        if (going)
+            ball.painting(graphics);
     }
 
-    public boolean check(AbstractActor actor){//проверка с каокой стороной шарик столкнулся
+    public boolean check(AbstractActor actor){//проверка с какой стороной шарик столкнулся действует для стены,блоков и панели
         int direct;
         if(actor.down>ball.up&& ball.centerX > actor.left && ball.centerX < actor.right&&ball.down>actor.down)
         {
@@ -76,31 +64,31 @@ public class Habitat extends JPanel implements Runnable{
             direct=4;
             ball.onCollision(actor,direct);
             if(actor instanceof Wall) {
-                //go=false;
-                anInterface.timeStopped();
                 singleton.life-=1;
-                platform.ToggleBallMovement();//
-                ball.DestroyBall();//обновление шарика
-                //rewriting();
+                anInterface.repaint();
+                if (singleton.life == 0) {
+                    game.GameOver();
+                }
+                else {
+                    ball.DestroyBall();
+                    platform.ToggleBallMovement();
+                }
             }
             return true;
         }
         if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<ball.getSizeX()/2){
-            //System.out.println("нижний правый");
             direct=5;
             ball.onCollision(actor,direct);
             return true;
         }
         if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2))<ball.getSizeX()/2)
         {
-            //System.out.println("верхний правый");
             direct=6;
             ball.onCollision(actor,direct);
             return true;
         }
         if(Math.sqrt(Math.pow(ball.centerX-actor.left,2)+Math.pow(ball.centerY-actor.up,2))<ball.getSizeX()/2)
         {
-            //System.out.println("верхний левый");
             direct=7;
             ball.onCollision(actor,direct);
             return true;
@@ -109,25 +97,43 @@ public class Habitat extends JPanel implements Runnable{
             direct=8;
             ball.onCollision(actor,direct);
             return true;
-            //System.out.println("нижний левый ");
         }
+
         return false;
     }
 
-    public void removeBlock(AbstractActor actor){
+    public void removeBlock(AbstractActor actor){//удаляет блок которого косается шарик
         if(actor instanceof AbstractBlock)
         {
             singleton.getVector().remove(actor);
+            singleton.AddPoints(((AbstractBlock) actor).points);
+            if(singleton.points==8000)// если все шарики убиты, то игра закончилась
+            {
+                game.GameOver();
+            }
         }
+    }
+
+    public void setupHabitat()//создание сетки блоков
+    {
+        factory.createWall(0,0,10,700);
+        factory.createWall(825,0,100,700);
+        factory.createWall(0,0,840,10);
+        factory.createWall(0,652,850,100);
+       for(int i=0;i<10;i++) {
+            for (int j = 0; j < 8; j++) {
+                factory.createBlock(120 + i*60, 300 - j*35, sizeX, sizeY);
+            }
+        }
+        singleton.getVector().add(platform);
     }
 
     @Override
     public void run() {
         while (going) {
-            //System.out.println(time);
             try {
                 Thread.sleep(10);
-                repaint();
+                repaint();//перерисовка объектов
             } catch (InterruptedException e) {
                 going=false;
             }

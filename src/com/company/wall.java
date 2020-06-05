@@ -13,7 +13,7 @@ public class Wall extends AbstractActor {
     }
 
     @Override
-    public void painting(Graphics g) {
+    public void painting(Graphics g) {//Рисование стены
         g.setColor(Color.BLACK);
         g.fillRect((int)x,(int)y,sizeX,sizeY);
         g.drawRect((int)x,(int)y,sizeX,sizeY);
