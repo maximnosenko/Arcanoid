@@ -20,7 +20,7 @@ public class Platform extends AbstractPlatform {
             if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX) {
                 setCoordinates((getX() + moveDirection * speed), getY());
                 if (!ballMoving)
-                    ball.setX(ball.getX() + moveDirection * speed);
+                    ball.setCoordinates(ball.getX() + moveDirection * speed, ball.getY());
             }
             try {
                 Thread.sleep(10);

@@ -42,23 +42,23 @@ public class Habitat extends JPanel implements Runnable{
 
     public boolean check(AbstractActor actor){//проверка с какой стороной шарик столкнулся действует для стены,блоков и панели
         int direct;
-        if(actor.down>ball.up&& ball.centerX > actor.left && ball.centerX < actor.right&&ball.down>actor.down)
+        if(actor.down>=ball.up&& ball.centerX >= actor.left && ball.centerX <= actor.right&&ball.down>=actor.down)
         {
             direct=3;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(actor.right>ball.left&&actor.right<ball.right&&ball.centerY > actor.up && ball.centerY < actor.down){
+        if(actor.right>=ball.left&&actor.right<=ball.right&&ball.centerY >= actor.up && ball.centerY <= actor.down){
             direct=1;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(actor.left<ball.right&&actor.right>ball.right&&ball.centerY > actor.up && ball.centerY < actor.down){
+        if(actor.left<=ball.right&&actor.right>=ball.right&&ball.centerY >= actor.up && ball.centerY <= actor.down){
             direct=2;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(actor.up<ball.down&&actor.right>ball.centerX&&actor.left<ball.centerX&&ball.up<actor.up)
+        if(actor.up<=ball.down&&actor.right>=ball.centerX&&actor.left<=ball.centerX&&ball.up<=actor.up)
         {
 
             direct=4;
@@ -76,24 +76,24 @@ public class Habitat extends JPanel implements Runnable{
             }
             return true;
         }
-        if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<ball.getSizeX()/2){
+        if(Math.sqrt(Math.pow(ball.centerX-actor.right,2)+Math.pow(ball.centerY-actor.down,2))<=ball.getSizeX()/2){
             direct=5;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2))<ball.getSizeX()/2)
+        if(Math.sqrt(Math.pow(actor.right-ball.centerX,2)+Math.pow(actor.up-ball.centerY,2))<=ball.getSizeX()/2)
         {
             direct=6;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(Math.sqrt(Math.pow(ball.centerX-actor.left,2)+Math.pow(ball.centerY-actor.up,2))<ball.getSizeX()/2)
+        if(Math.sqrt(Math.pow(ball.centerX-actor.left,2)+Math.pow(ball.centerY-actor.up,2))<=ball.getSizeX()/2)
         {
             direct=7;
             ball.onCollision(actor,direct);
             return true;
         }
-        if(Math.sqrt(Math.pow(actor.left-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<ball.getSizeX()/2){
+        if(Math.sqrt(Math.pow(actor.left-ball.centerX,2)+Math.pow(actor.down-ball.centerY,2))<=ball.getSizeX()/2){
             direct=8;
             ball.onCollision(actor,direct);
             return true;
@@ -125,6 +125,7 @@ public class Habitat extends JPanel implements Runnable{
                 factory.createBlock(120 + i*60, 300 - j*35, sizeX, sizeY);
             }
         }
+       platform.setCoordinates(380, 600);
         singleton.getVector().add(platform);
     }
 

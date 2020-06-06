@@ -81,7 +81,8 @@ public class Game {
         singleton.SetPoints(0);
         habitat.setupHabitat();
         habitat.ball.DestroyBall();
-        habitat.platform.ToggleBallMovement();
+        if (habitat.platform.ballMoving)
+            habitat.platform.ToggleBallMovement();
         anInterface.starterTime();
         habitat.repaint();
     }
