@@ -1,6 +1,8 @@
 package com.company;
 
-public class ConcreteFactory implements Factory {
+import java.io.Serializable;
+
+public class ConcreteFactory implements Factory, Serializable {
     Singleton singleton=Singleton.getInstance();
     //создание блока
     @Override

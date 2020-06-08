@@ -1,6 +1,8 @@
 package com.company;
 
-public abstract class AbstractActor implements Behavior {
+import java.io.Serializable;
+
+public abstract class AbstractActor implements Behavior, Serializable {
     double x,y;
     int sizeX,sizeY;//размер объекта
     double right,left,up,down;//стороны объекта

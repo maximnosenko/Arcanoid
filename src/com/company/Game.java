@@ -3,21 +3,25 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 
 //Реализация интерфейсов и всякого прикольного
-public class Game {
+public class Game implements Serializable {
     JFrame frame;
     private Singleton singleton=Singleton.getInstance();
     Interface anInterface=new Interface(singleton, this);
-    private Habitat habitat=new Habitat(singleton,anInterface,this);
+    public Habitat habitat=new Habitat(singleton,anInterface,this);
     private Dialog dialog;
-    boolean going=false;
+    JMenuBar menuBar=new JMenuBar();
+    //boolean going=false;
 
     public Game(){
         frame=new JFrame("Arkanoid");
         frame.add(habitat, BorderLayout.CENTER);
         frame.add(anInterface,BorderLayout.NORTH);
         System.out.println(singleton.getVector());
+        frame.setJMenuBar(menuBar);
+        menuBar.add(anInterface.menu);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -60,7 +64,7 @@ public class Game {
                 if(e.getButton()==MouseEvent.BUTTON1)
                 {
                     if(!habitat.platform.ballMoving) {
-                        habitat.go=true;
+                        //habitat.go=true;
                         habitat.ball.setDir(e.getX()-5, e.getY()-30);
                         habitat.platform.ToggleBallMovement();//запускает потоки
                     }
@@ -69,18 +73,36 @@ public class Game {
         });
     }
 
+    public synchronized void pause(){
+        habitat.platform.ballMoving=false;
+        //habitat.platform.isMoving=false;
+        habitat.platform.platformMoving=true;
+        //habitat.going=false;
+        //habitat.repaint();
+
+        //habitat.repaint();
+        //habitat.platform.isBallMoving();
+        //habitat.platform.isMoving=false;
+    }
+
+    public void renew(){
+        habitat.platform.ToggleBallMovement();
+        habitat.platform.TogglePlatformMovement();
+        //habitat.platform.ballMoving=true;
+        //habitat.platform.isMoving=true;
+        habitat.repaint();
+    }
+
     public void Restart()
     {
-        new Thread(habitat).start();
-        //new Thread(habitat.ball).start();
-        //new Thread(habitat.platform).start();
         habitat.going=true;
         anInterface.timeStopped();
         singleton.refreshVector();
         singleton.life = 3;
         singleton.SetPoints(0);
         habitat.setupHabitat();
-        habitat.ball.DestroyBall();
+        habitat.ball.DestroyBall(); //ВоСТАНОВИТЬ
+        if(habitat.platform.ballMoving)
         habitat.platform.ToggleBallMovement();
         anInterface.starterTime();
         habitat.repaint();

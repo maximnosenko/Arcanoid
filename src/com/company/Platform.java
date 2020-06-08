@@ -3,8 +3,9 @@ package com.company;
 import java.awt.*;
 
 public class Platform extends AbstractPlatform {
-    Platform(double x, double y, int sizeX, int sizeY) {
+    Platform(double x, double y, int sizeX, int sizeY,Habitat habitat) {
         super(x, y, sizeX, sizeY);
+        this.habitat=habitat;
     }
 
     @Override
@@ -14,13 +15,29 @@ public class Platform extends AbstractPlatform {
         g.drawRect((int)x,(int)y,sizeX,sizeY);
     }
 
+
+    public synchronized void isPlatformMoving()
+    {
+        try {
+            if(platformMoving)
+                wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //platform.ballMoving=!platform.ballMoving;
+        //platform.isMoving=!platform.isMoving;
+        //going=!going;
+    }
+
     @Override
     public void run() {
         while (isMoving) {
+            isPlatformMoving();
+           // habitat.isPlatformMoving();
             if (getX() + moveDirection * speed < maxX && getX() + moveDirection * speed > minX) {
                 setCoordinates((getX() + moveDirection * speed), getY());
                 if (!ballMoving)
-                    ball.setX(ball.getX() + moveDirection * speed);
+                    ball.setCoordinates(ball.getX() + moveDirection * speed,ball.getY());
             }
             try {
                 Thread.sleep(10);

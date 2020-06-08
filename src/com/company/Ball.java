@@ -73,7 +73,7 @@ public class Ball extends AbstractBall {
 
     @Override
     public synchronized void run() {
-        while(true){
+        while(go){
             platform.isBallMoving();
             setCoordinates(getX()+getXDir()*getSpeed(),getY()+getYDir()*getSpeed());
             try {

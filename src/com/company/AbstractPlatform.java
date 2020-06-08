@@ -7,7 +7,8 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
     public boolean isMoving=true;//запускает работу потока
     public int ballSize = 20;//Размер Шарика
     public AbstractBall ball;
-    public boolean ballMoving;//запускает работу движение шарика
+    public Habitat habitat;
+    public boolean ballMoving,platformMoving;//запускает работу движение шарика
 
     AbstractPlatform(double x,double y,int sizeX,int sizeY)
     {
@@ -46,7 +47,17 @@ public abstract class AbstractPlatform extends AbstractActor implements Runnable
         return ball;
     }
 
-    public synchronized void isBallMoving() {//если мячик не активен, то поток ждет
+    public synchronized void TogglePlatformMovement() {//Возобновляет поток
+        if (!platformMoving)
+            notifyAll();
+        platformMoving=!platformMoving;
+        //platform.isMoving=!platform.isMoving;
+        //ballMoving = !ballMoving;
+        //isMoving=!isMoving;
+    }
+
+
+    public synchronized void isBallMoving() {//если мячик активен, то поток ждет
         try {
             if(!ballMoving)
                 wait();
