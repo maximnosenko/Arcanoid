@@ -121,7 +121,7 @@ public class Habitat extends JPanel implements Runnable{
         factory.createWall(0,652,850,100);
        for(int i=0;i<10;i++) {
             for (int j = 0; j < 8; j++) {
-                factory.createBlock(120 + i*60, 300 - j*35, sizeX, sizeY);
+                factory.createBlock(60 + i*75, 300 - j*35, sizeX, sizeY);
             }
         }
         singleton.getVector().add(platform);

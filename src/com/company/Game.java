@@ -63,7 +63,7 @@ public class Game implements Serializable {
                 super.mousePressed(e);
                 if(e.getButton()==MouseEvent.BUTTON1)
                 {
-                    if(!habitat.platform.ballMoving) {
+                    if(!habitat.platform.ballMoving&&!habitat.platform.platformMoving) {
                         //habitat.go=true;
                         habitat.ball.setDir(e.getX()-5, e.getY()-30);
                         habitat.platform.ToggleBallMovement();//запускает потоки
@@ -73,42 +73,33 @@ public class Game implements Serializable {
         });
     }
 
-    public synchronized void pause(){
+    public synchronized void pause(){//приостановление потоков
         habitat.platform.ballMoving=false;
-        //habitat.platform.isMoving=false;
         habitat.platform.platformMoving=true;
-        //habitat.going=false;
-        //habitat.repaint();
-
-        //habitat.repaint();
-        //habitat.platform.isBallMoving();
-        //habitat.platform.isMoving=false;
     }
 
-    public void renew(){
+    public void renew(){//возобновление потоков
         habitat.platform.ToggleBallMovement();
         habitat.platform.TogglePlatformMovement();
-        //habitat.platform.ballMoving=true;
-        //habitat.platform.isMoving=true;
         habitat.repaint();
     }
 
-    public void Restart()
+    public void Restart()//перезагрузка игры
     {
-        //habitat.going=true;
         anInterface.timeStopped();
+        anInterface.starterTime();
         singleton.refreshVector();
         singleton.life = 3;
         singleton.SetPoints(0);
         habitat.setupHabitat();
-        habitat.ball.DestroyBall(); //ВоСТАНОВИТЬ
+        habitat.ball.DestroyBall();
         if(habitat.platform.ballMoving)
         habitat.platform.ToggleBallMovement();
-        anInterface.starterTime();
+
         habitat.repaint();
     }
 
-    public void GameOver()
+    public void GameOver()//Если игра пройдена или игра проиграна
     {
         habitat.going = false;
         habitat.repaint();

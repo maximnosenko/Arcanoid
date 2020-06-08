@@ -25,6 +25,7 @@ public class Interface extends JPanel implements Serializable {
 
     public void starterTime()//запускает отсчет времени
     {
+        currentTime=0;
         mTimer = new Timer();
         mTimer.schedule(new Updater(this),0,1000);
     }
@@ -89,16 +90,13 @@ public class Interface extends JPanel implements Serializable {
 
     private class Updater extends TimerTask {//счетчик блягодаря которому видем пройденое время
         private Interface anInterface;
-        //int time=0;
         public Updater(Interface inter)
         {
             anInterface=inter;
         }
         @Override
         public void run() {
-            //time +=1;
             currentTime+=1;
-            //setCurrentTime(time);
             anInterface.repaint();
         }
     }
@@ -134,22 +132,21 @@ public class Interface extends JPanel implements Serializable {
             }
         });
         menu.setFocusable(false);
-        //add(menu);
-//        game.menuBar.setFocusable(false);
-        //game.menuBar.add(menu);
     }
 
     public void objSave() throws IOException {
         FileOutputStream file =new FileOutputStream("GAME.ser");
         ObjectOutputStream outputStream=new ObjectOutputStream(file);
-        outputStream.write(currentTime);
-        outputStream.write(singleton.life);
-        outputStream.write(singleton.Getpoints());
+
+        outputStream.writeInt(currentTime);
+        outputStream.writeInt(singleton.life);
+        outputStream.writeInt(singleton.Getpoints());
+        System.out.println(singleton.Getpoints());
         for(AbstractActor actor:singleton.getVector()){
             if(actor instanceof AbstractPlatform)
                 continue;
             outputStream.writeObject(actor);
-            System.out.println(actor);
+            //System.out.println(actor);
         }
         outputStream.flush();
         outputStream.close();
@@ -160,10 +157,12 @@ public class Interface extends JPanel implements Serializable {
         ObjectInputStream object=new ObjectInputStream(file);
         currentTime=0;
         singleton.getVector().clear();
+        singleton.points=0;
 
-        currentTime= object.read();
-        singleton.life=object.read();
-        singleton.AddPoints(object.read());
+        currentTime= object.readInt();
+        singleton.life=object.readInt();
+        singleton.AddPoints(object.readInt());
+        System.out.println(singleton.points);
         while (true)
         {
             try {
@@ -173,7 +172,6 @@ public class Interface extends JPanel implements Serializable {
                 System.out.println("exit");
                 object.close();
                 break;
-                //e.printStackTrace();
             }
         }
         singleton.getVector().add(game.habitat.platform);
