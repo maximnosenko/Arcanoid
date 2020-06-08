@@ -95,7 +95,7 @@ public class Game implements Serializable {
 
     public void Restart()
     {
-        habitat.going=true;
+        //habitat.going=true;
         anInterface.timeStopped();
         singleton.refreshVector();
         singleton.life = 3;
