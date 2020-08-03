@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Wall extends AbstractActor {
 
-    Wall(double x,double y, int sizeX,int sizeY){
+    Wall(double x,double y, int sizeX,int sizeY){//конструктор, который задает изначальные помя
         this.x=x;
         this.y=y;
         this.sizeX=sizeX;
@@ -13,8 +13,8 @@ public class Wall extends AbstractActor {
     }
 
     @Override
-    public void painting(Graphics g) {
-        g.setColor(Color.BLACK);
+    public void painting(Graphics g) {//Рисует стены
+        g.setColor(Color.BLACK);//закрашивает стены черным цветом
         g.fillRect((int)x,(int)y,sizeX,sizeY);
         g.drawRect((int)x,(int)y,sizeX,sizeY);
     }

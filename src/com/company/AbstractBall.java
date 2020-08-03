@@ -2,11 +2,10 @@ package com.company;
 
 public abstract class AbstractBall extends AbstractActor implements Movable,Runnable{
 
-    int minY;// для пересечения нижнего поля
     int speed;//скорость шарика
     double dirX,dirY,r;//нужны для направления шарика
-    int life=3;
     AbstractPlatform platform;
+    boolean go=true;
 
     AbstractBall(double x, double y, int sizeX, int sizeY, AbstractPlatform platform)
     {
@@ -16,11 +15,10 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
         this.platform = platform;
     }
 
-    abstract void setDir(double newX, double newY);
+    abstract void setDir(double newX, double newY);//Задает новое направление
 
     @Override
-    public void DestroyBall() {
-        life=life-1;
+    public void DestroyBall() {//ставит шарик на исходную, т.е. по центру панели
         setCoordinates(platform.centerX - sizeX/2, platform.getY() - sizeY - 10);
     }
 
@@ -30,30 +28,15 @@ public abstract class AbstractBall extends AbstractActor implements Movable,Runn
     @Override
     public int getSpeed() {
         return speed;
-    }
-
-    @Override
-    public void setSpeed(int speed) {
-        this.speed=speed;
-    }
-
-    @Override
-    public void setXDir(double dirX) {
-        this.dirX=dirX;
-    }
-
-    @Override
-    public void setYDir(double dirY) {
-        this.dirY=dirY;
-    }
+    }//возвращает скорость
 
     @Override
     public double getXDir() {
         return this.dirX;
-    }
+    }//направление по X
 
     @Override
     public double getYDir() {
         return this.dirY;
-    }
+    }//Направление по Y
 }
