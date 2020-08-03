@@ -1,6 +1,6 @@
 package com.company;
 
 public interface PlayerControl {
-    void moveRight();
-    void moveLeft();
+    void moveRight();//движение вправо
+    void moveLeft();//движение влево
 }
